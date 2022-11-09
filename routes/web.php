@@ -16,8 +16,13 @@ use App\Http\Controllers\AuthController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        return view('welcome');
+        return view('welcome', ['user' => auth()->user()]);
     })->name('dashboard');
+
+    Route::post('/logout', function () {
+        auth()->logout();
+        return redirect()->route('login');
+    })->name('logout');
 });
 // Route::get('/', function () {
 //     return view('components.auth');

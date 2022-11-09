@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -35,9 +38,26 @@ class AuthController extends Controller
 
         $password = Hash::make($request->password);
 
-        $user = User::create($request->only(['name', 'dob', 'email', 'username', 'phone']) + ['password' => $password]);
+        $data = $request->only(['name', 'dob', 'email', 'username', 'phone', 'dial_code']);
+        $data['password'] = $password;
+
+        if ($request->photo) {
+            $path = 'images/' . Str::random(15) . '.jpg';
+            $imagePath =  Storage::disk('public')->path($path);
+            Image::make($request->photo)->save($imagePath, 100, 'jpg');
+
+            $data['photo_url'] = Storage::url($path);
+            $data['photo_path'] = $imagePath;
+
+        }
+
+        $user = User::create( $data);
 
         Auth::login($user);
+
+        if ($request->expectsJson()) {
+            return ['message' => "Successful"];
+        }
 
         return redirect()->route('dashboard');
     }
@@ -56,7 +76,7 @@ class AuthController extends Controller
 
         $user = User::where('username', $request->username)->firstOrFail();
 
-        if(Hash::check($request->password, $user->password)){
+        if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
 
             return redirect()->route('dashboard');

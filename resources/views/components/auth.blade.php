@@ -131,6 +131,8 @@
             justify-content: center;
             margin-right: 15px;
             overflow: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         .register .icon-wraper i {
@@ -166,6 +168,11 @@
             top: 150px;
             right: -80px;
         }
+
+        .register .vue-country-select {
+            border-bottom-left-radius: 12px;
+            border-top-left-radius: 12px;
+        }
     </style>
 </head>
 
@@ -196,13 +203,14 @@
             </div>
         </div>
     </header>
-    <div class="body">
+    <div class="body" id="app">
         {{ $slot }}
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
 </script>
+<script src="/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
 </script>
