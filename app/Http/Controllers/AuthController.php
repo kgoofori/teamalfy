@@ -10,6 +10,12 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+
+    public function registerForm()
+    {
+        return view('auth.register');
+    }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -36,6 +42,11 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function loginForm()
+    {
+        return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -50,7 +61,7 @@ class AuthController extends Controller
 
             return redirect()->route('dashboard');
         }
-        
+
         return back()->with('error', 'Invalid username or password');
     }
 }

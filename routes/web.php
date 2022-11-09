@@ -14,9 +14,17 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-})->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('dashboard');
+});
+// Route::get('/', function () {
+//     return view('components.auth');
+// })->name('dashboard');
 
+
+Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
