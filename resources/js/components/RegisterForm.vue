@@ -30,8 +30,10 @@
 						type="text"
 						name="name"
 						v-model="formData.name"
+						required
 						:class="(errors.has('name') ? 'is-invalid' : '') + ' form-control'"
 						placeholder="Full Name"
+						@change="errors.clear('name')"
 					/>
 					<span class="invalid-feedback" role="alert" v-if="errors.has('name')">
 						<strong>{{ errors.get("name") }}</strong>
@@ -44,8 +46,11 @@
 						type="date"
 						name="dob"
 						v-model="formData.dob"
+						data-toggle="flatpickr"
+						required
 						:class="(errors.has('dob') ? 'is-invalid' : '') + ' form-control'"
 						placeholder="DOB"
+						@change="errors.clear('dob')"
 					/>
 					<span class="invalid-feedback" role="alert" v-if="errors.has('dob')">
 						<strong>{{ errors.get("dob") }}</strong>
@@ -60,7 +65,9 @@
 						"
 						name="country"
 						placeholder="Country"
+						required
 						v-model="formData.country"
+						@change="errors.clear('country')"
 					>
 						<option value=""></option>
 						<option>Ghana</option>
@@ -83,6 +90,8 @@
 						v-model="formData.email"
 						:class="(errors.has('email') ? 'is-invalid' : '') + ' form-control'"
 						placeholder="Email Address"
+						required
+						@change="errors.clear('email')"
 					/>
 					<span
 						class="invalid-feedback"
@@ -107,6 +116,8 @@
 							type="text"
 							name="phone"
 							v-model="formData.phone"
+							required
+							@change="errors.clear('phone')"
 							:class="
 								(errors.has('phone') ? 'is-invalid' : '') + ' form-control'
 							"
@@ -129,6 +140,8 @@
 						type="text"
 						name="username"
 						v-model="formData.username"
+						required
+						@change="errors.clear('username')"
 						:class="
 							(errors.has('username') ? 'is-invalid' : '') + ' form-control'
 						"
@@ -149,6 +162,8 @@
 						type="password"
 						name="password"
 						v-model="formData.password"
+						required
+						@change="errors.clear('password')"
 						:class="
 							(errors.has('password') ? 'is-invalid' : '') + ' form-control'
 						"
@@ -185,10 +200,12 @@
 <script>
 import FormErrors from "../libs/FormErrors";
 export default {
+\
 	data() {
 		return {
 			errors: new FormErrors(),
 			processingForm: false,
+			options: ['Ghana', 'Nigeria'],
 
 			formData: {
 				dial_code: "",
